@@ -1,11 +1,17 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Version } from '@nestjs/common';
+import { AuthService } from './auth.service';
+import { ApiVersions } from 'src/common/enums/versions.enum';
 
-@Controller('auth')
+@Controller({
+  path: 'auth',
+  version: ApiVersions.ONE,
+})
 export class AuthController {
-  constructor() {}
+  constructor(private authService: AuthService) {}
 
   @Get()
+  @Version(ApiVersions.ONE)
   async getAuth() {
-    return 12345;
+    return await this.authService.getAuth();
   }
 }

@@ -1,5 +1,9 @@
-import { INestApplication } from '@nestjs/common';
+import { INestApplication, VersioningType } from '@nestjs/common';
 
-export const appConfig = (app: INestApplication<any>) => {
-  app.setGlobalPrefix('/api/v1');
+export const useGlobalConfig = (app: INestApplication<any>) => {
+  app.setGlobalPrefix('/api');
+
+  app.enableVersioning({
+    type: VersioningType.URI,
+  });
 };
