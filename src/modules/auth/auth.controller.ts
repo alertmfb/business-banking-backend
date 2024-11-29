@@ -1,17 +1,8 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  UseGuards,
-  Version,
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Version } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiVersions } from 'src/common/enums/versions.enum';
 import { SignInWithPassword } from './dto/auth.dto';
 import { Public } from 'src/decorators/public.decorator';
-import { LocalAuthGuard } from 'src/guards/local-auth.guard';
-import { AuthGuard } from '@nestjs/passport';
 
 @Controller({
   path: 'auth',
