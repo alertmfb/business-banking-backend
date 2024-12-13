@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "users" ALTER COLUMN "passcode" DROP NOT NULL,
+ALTER COLUMN "pin" DROP NOT NULL;
