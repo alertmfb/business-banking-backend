@@ -36,4 +36,4 @@ RUN npm run build
 EXPOSE 3000
 
 # Define the command to run migrations and start the application
-CMD "npm run prod"
+CMD "npm run prod:deploy"
