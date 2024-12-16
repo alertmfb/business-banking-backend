@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "0:3000" # Map the container port 3000 to your local port 3000
+      - '0:3000' # Map the container port 3000 to your local port 3000
     environment:
       - NODE_ENV=production
       - DATABASE_URL=postgresql://postgres:postgrespassword@db:5432/alert_biz_db
@@ -18,15 +18,15 @@ services:
 
   db:
     image: postgres:15
-    container_name: business-banking-db
+    container_name: business-backend-db
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgrespassword
       POSTGRES_DB: mydatabase
     ports:
-      - "0:5432"
+      - '0:5432'
     volumes:
-      - business-banking-db-data:/var/lib/postgresql/data
+      - business-backend-db-data:/var/lib/postgresql/data
 
 volumes:
-  business-banking-db-data:
+  business-backend-db-data:

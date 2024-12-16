@@ -18,8 +18,8 @@ jobs:
           chmod 600 /tmp/vps-key.pem
           ssh -i /tmp/vps-key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
           eval "$(ssh-agent -s)"
-          ssh-add ~/.ssh/id_ed25519_banking-services
-          cd /var/www/hosts/business-banking/sandbox
+          ssh-add ~/.ssh/id_ed25519_business-banking-backend
+          cd /var/www/hosts/business-backend/sandbox
           git pull origin sandbox
           touch .env
           echo "NODE_ENV=production" >> .env
