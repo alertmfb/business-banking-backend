@@ -12,7 +12,7 @@ FROM node:${NODE_VERSION}-alpine as base
 RUN apk add --no-cache openssl postgresql-client
 
 # Set the working directory inside the container
-WORKDIR /app
+WORKDIR /.
 
 # Copy package.json and package-lock.json for dependency installation
 COPY package*.json ./
