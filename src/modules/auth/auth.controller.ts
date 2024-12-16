@@ -4,12 +4,8 @@ import {
   HttpException,
   HttpStatus,
   Post,
-  Version,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { ApiVersions } from 'src/shared/enums/versions.enum';
-import { SignInWithPassword } from './dto/auth.dto';
-import { Public } from 'src/utils/decorators/public.decorator';
 import { InitiateSignUpDto } from './dto/initiate-signup.dto';
 import { SuccessResponseDto } from 'src/shared/dtos/success-response.dto';
 import { SuccessMessage } from '../../shared/enums/success-message.enum';
@@ -20,21 +16,9 @@ import { ApiTags } from '@nestjs/swagger';
 import { InitiateSignInDto } from './dto/initiate-signin.dto';
 
 @ApiTags('Auth Service')
-@Controller({
-  path: 'auth',
-})
+@Controller('/auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
-
-  // @Public()
-  // @Post('signin')
-  //
-  // async signInWithPassword(@Body() payload: SignInWithPassword) {
-  //   return await this.authService.signInWithPassword(
-  //     payload.email,
-  //     payload.password,
-  //   );
-  // }
 
   @Post('signin')
   async signInInitiate(@Body() payload: InitiateSignInDto) {
@@ -45,17 +29,6 @@ export class AuthController {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-
-  // @Post('signin/verify-otp')
-  //
-  // async verifySignInOtp(@Body() payload: VerifyOtpDto) {
-  //   try {
-  //     const response = await this.authService.verifySignInOtp(payload);
-  //     return new SuccessResponseDto(SuccessMessage.PHONE_VERIFIED, response);
-  //   } catch (e) {
-  //     throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
-  //   }
-  // }
 
   @Post('signin/verify-passcode')
   async signInWithPasscode(@Body() payload: any) {
@@ -118,7 +91,7 @@ export class AuthController {
   }
 
   @Post('passcode/reset/request')
-  async requestReset() {
+  async requestReset(@Body() payload: VerifyOtpDto) {
     try {
       const response = await this.authService.completeSignUp();
       return new SuccessResponseDto(SuccessMessage.SIGNUP_COMPLETED, response);

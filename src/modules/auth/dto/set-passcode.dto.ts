@@ -14,7 +14,7 @@ export class SetPasscodeDto {
   @MaxLength(6, { message: 'Passcode must be exactly 6 digits long' })
   @MinLength(6, { message: 'Passcode must be exactly 6 digits long' })
   @ApiProperty({ required: true, example: 123456 })
-  pin: number;
+  passcode: number;
 
   @IsDefined()
   @IsNotEmpty()
@@ -22,5 +22,5 @@ export class SetPasscodeDto {
   @MaxLength(6, { message: 'Confirm Passcode must be exactly 4 digits long' })
   @MinLength(6, { message: 'Confirm Passcode must be exactly 4 digits long' })
   @ApiProperty({ required: true, example: 123456 })
-  confirmPin: number;
+  confirmPasscode: number;
 }

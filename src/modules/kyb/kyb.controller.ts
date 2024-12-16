@@ -26,10 +26,9 @@ export class KybController {
   constructor(private readonly kybService: KybService) {}
 
   @Post('nationality')
-  // @ApiBody({ type: NationalityDto })
+  @ApiBody({ type: NationalityDto })
   async setNationality(@Body() payload: NationalityDto) {
     try {
-      console.log(payload);
       const response = await this.kybService.setNationality(payload);
       return new SuccessResponseDto(SuccessMessage.SET_NATIONALITY, response);
     } catch (e) {

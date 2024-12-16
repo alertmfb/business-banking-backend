@@ -1,18 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { useGlobalConfig } from './config/app.config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import {
-  FastifyAdapter,
-  NestFastifyApplication,
-} from '@nestjs/platform-fastify';
-// import * as multipart from '@fastify/multipart';
-
+import { Logger } from '@nestjs/common';
 async function bootstrap() {
-  const app = await NestFactory.create<NestFastifyApplication>(
-    AppModule,
-    new FastifyAdapter(),
-  );
+  const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('/api/v1');
 
   const swaggerConfig = new DocumentBuilder()
@@ -24,8 +15,15 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('docs', app, document);
 
-  useGlobalConfig(app);
-  // app.register(multipart);
+  Logger.log(
+    `Server running on http://localhost:${process.env.PORT ?? 3000}`,
+    'Bootstrap',
+  );
+  Logger.log(
+    `Swagger running on http://localhost:${process.env.PORT ?? 3000}/docs`,
+    'Bootstrap',
+  );
+
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

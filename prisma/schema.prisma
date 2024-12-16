@@ -1,14 +1,14 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL") 
+  url      = env("DATABASE_URL")
 }
 
-enum OnboardEnum{
+enum OnboardEnum {
   NEW
   INITIATED
   PHONE_VERIFIED
@@ -22,45 +22,52 @@ enum OnboardEnum{
 }
 
 model User {
-  id       String     @id @default(cuid())
-  email    String     @unique
-  name     String?
-  password String 
-  passcode String?     
-  pin      String?
+  id         String      @id @default(cuid())
+  email      String      @unique
+  firstName  String?
+  lastName   String?
+  otherName  String?
+  password   String?
+  passcode   String?
+  pin        String?
   onboarding OnboardEnum @default(NEW)
-  accounts Account[]
-  kyb Kyb[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  accounts   Account[]
+  kyb        Kyb[]
+  token      String?
+  otp        String?
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
   @@map("users")
 }
 
 model Account {
-  id            String @id @default(uuid())
-  accountNumber String @unique
-  user          User  @relation(fields: [userId], references: [id])
+  id            String   @id @default(uuid())
+  accountNumber String   @unique
+  user          User     @relation(fields: [userId], references: [id])
   userId        String
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+
   @@map("accounts")
 }
 
 model Kyb {
-  id        String @id @default(uuid())
-  user      User   @relation(fields: [userId], references: [id])
-  userId    String
-  nationalityStatus Boolean @default(false)
-  faceVerifyStatus Boolean @default(false)
-  ninStatus Boolean @default(false)
-  tinStatus Boolean @default(false)
-  bvnStatus Boolean @default(false)
-  residentialAddressStatus Boolean @default(false)
-  businessAddressStatus Boolean @default(false)
-  businessDetailsStatus Boolean @default(false)
-  businessDocumentStatus Boolean @default(false)
-  attestation Boolean @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                       String   @id @default(uuid())
+  user                     User     @relation(fields: [userId], references: [id])
+  userId                   String
+  nationalityStatus        Boolean  @default(false)
+  faceVerifyStatus         Boolean  @default(false)
+  ninStatus                Boolean  @default(false)
+  tinStatus                Boolean  @default(false)
+  bvnStatus                Boolean  @default(false)
+  residentialAddressStatus Boolean  @default(false)
+  businessAddressStatus    Boolean  @default(false)
+  businessDetailsStatus    Boolean  @default(false)
+  businessDocumentStatus   Boolean  @default(false)
+  attestation              Boolean  @default(false)
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+
   @@map("kybs")
 }
