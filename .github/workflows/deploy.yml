@@ -1,10 +1,9 @@
-name: Deploy Sandbox and Bank-One
+name: Deploy Business Banking Sandbox
 
 on:
   push:
     branches:
       - sandbox
-      - main
 
 jobs:
   build-sandbox:
@@ -30,7 +29,7 @@ jobs:
           echo "MESSAGING_KEY=${{ secrets.MESSAGING_KEY }}" >> .env
           echo "KYB_URL=${{ secrets.KYB_URL }}" >> .env
           echo "KYB_KEY=${{ secrets.KYB_KEY }}" >> .env
-          docker compose --env-file .env -f apps/core/compose.sandbox.yml up --build -d
+          docker compose --env-file .env -f compose.sandbox.yml up --build -d
           EOF
 
   build-bank-one:
@@ -56,5 +55,5 @@ jobs:
           echo "MESSAGING_KEY=${{ secrets.MESSAGING_KEY }}" >> .env
           echo "KYB_URL=${{ secrets.KYB_URL }}" >> .env
           echo "KYB_KEY=${{ secrets.KYB_KEY }}" >> .env
-          docker compose --env-file .env -f apps/core/compose.prod.yml up --build -d
+          docker compose --env-file .env -f compose.prod.yml up --build -d
           EOF
