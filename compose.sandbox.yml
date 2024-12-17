@@ -24,7 +24,7 @@ services:
       POSTGRES_PASSWORD: postgrespassword
       POSTGRES_DB: mydatabase
     ports:
-      - "32777:7007"
+      - "32777:3000"
     volumes:
       - business-backend-db-data:/var/lib/postgresql/data
 
