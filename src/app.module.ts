@@ -8,6 +8,7 @@ import { KybModule } from './modules/kyb/kyb.module';
 import { APP_FILTER } from '@nestjs/core';
 import { HttpErrorFilter } from './utils/filters/http-exception.filter';
 import { MessagingModule } from './modules/messaging/messaging.module';
+import { StorageModule } from './modules/storage/storage.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { MessagingModule } from './modules/messaging/messaging.module';
     PrismaModule,
     KybModule,
     MessagingModule,
+    StorageModule,
   ],
   controllers: [AppController],
   providers: [

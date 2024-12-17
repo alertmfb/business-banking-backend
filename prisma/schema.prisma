@@ -22,27 +22,30 @@ enum OnboardEnum {
 }
 
 model User {
-  id         String      @id @default(cuid())
-  email      String      @unique
-  firstName  String?
-  lastName   String?
-  otherName  String?
-  password   String?
-  passcode   String?
-  pin        String?
-  onboarding OnboardEnum @default(NEW)
-  accounts   Account[]
-  kyb        Kyb[]
-  token      String?
-  otp        String?
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
+  id                 String               @id @default(cuid())
+  email              String               @unique
+  firstName          String?
+  lastName           String?
+  otherName          String?
+  password           String?
+  passcode           String?
+  pin                String?
+  onboarding         OnboardEnum          @default(NEW)
+  accounts           Account[]
+  kyb                Kyb[]
+  token              String?
+  otp                String?
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  ResidentialAddress ResidentialAddress[]
+  BusinessAddress    BusinessDetails[]
 
   @@map("users")
 }
 
 model Account {
   id            String   @id @default(uuid())
+  cusomterId    String
   accountNumber String   @unique
   user          User     @relation(fields: [userId], references: [id])
   userId        String
@@ -52,10 +55,58 @@ model Account {
   @@map("accounts")
 }
 
+model ResidentialAddress {
+  id        String   @id @default(uuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @unique
+  address   String
+  city      String
+  state     String
+  zipcode   String
+  landmark  String
+  lga       String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("residential_addresses")
+}
+
+model BusinessDetails {
+  id                String   @id @default(uuid())
+  user              User     @relation(fields: [userId], references: [id])
+  userId            String   @unique
+  businessName      String?
+  industry          String?
+  size              String?
+  income            String?
+  address           String?
+  city              String?
+  state             String?
+  zipcode           String?
+  landmark          String?
+  lga               String?
+  directorFirstName String?
+  directorLastName  String?
+  directorEmail     String?
+  directorPhone     String?
+  directorIdType    String?
+  directorIdNumber  String?
+  directorIdImage   String?  @db.Text
+  cacNumber         String?
+  cacdoc            String?
+  moiDoc            String?  @db.Text
+  scumlDoc          String?  @db.Text
+  utilityBill       String?  @db.Text
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@map("business_details")
+}
+
 model Kyb {
   id                       String   @id @default(uuid())
   user                     User     @relation(fields: [userId], references: [id])
-  userId                   String
+  userId                   String   @unique
   nationalityStatus        Boolean  @default(false)
   faceVerifyStatus         Boolean  @default(false)
   ninStatus                Boolean  @default(false)

@@ -33,7 +33,7 @@ jobs:
           docker compose --env-file .env -f apps/core/compose.sandbox.yml up --build -d
           EOF
 
-  build-bank-one:
+  build-prod:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
 

@@ -2,11 +2,13 @@ import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { ResidentialAddressDto } from './dto/residential-address.dto';
 import { KybProvider } from './providers/kyb-provider.interface';
 import { NationalityDto } from './dto/nationality.dto';
+import { KybRepository } from './kyb.repository';
 
 @Injectable()
 export class KybService {
   constructor(
     @Inject('KybProvider') private readonly kybProvider: KybProvider,
+    private readonly kybRepository: KybRepository,
   ) {}
   async setNationality(payload: NationalityDto) {
     try {
