@@ -1,10 +1,9 @@
-name: Deploy Sandbox and Bank-One
+name: Deploy Business Banking Sandbox
 
 on:
   push:
     branches:
       - sandbox
-      - main
 
 jobs:
   build-sandbox:
@@ -18,8 +17,8 @@ jobs:
           chmod 600 /tmp/vps-key.pem
           ssh -i /tmp/vps-key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
           eval "$(ssh-agent -s)"
-          ssh-add ~/.ssh/id_ed25519_banking-services
-          cd /var/www/hosts/business-banking/sandbox
+          ssh-add ~/.ssh/id_ed25519_business-banking-backend
+          cd /var/www/hosts/business-backend/sandbox
           git pull origin sandbox
           touch .env
           echo "NODE_ENV=production" >> .env
@@ -30,7 +29,7 @@ jobs:
           echo "MESSAGING_KEY=${{ secrets.MESSAGING_KEY }}" >> .env
           echo "KYB_URL=${{ secrets.KYB_URL }}" >> .env
           echo "KYB_KEY=${{ secrets.KYB_KEY }}" >> .env
-          docker compose --env-file .env -f apps/core/compose.sandbox.yml up --build -d
+          docker compose --env-file .env -f compose.sandbox.yml up --build -d
           EOF
 
   build-prod:
@@ -56,5 +55,5 @@ jobs:
           echo "MESSAGING_KEY=${{ secrets.MESSAGING_KEY }}" >> .env
           echo "KYB_URL=${{ secrets.KYB_URL }}" >> .env
           echo "KYB_KEY=${{ secrets.KYB_KEY }}" >> .env
-          docker compose --env-file .env -f apps/core/compose.prod.yml up --build -d
+          docker compose --env-file .env -f compose.prod.yml up --build -d
           EOF
