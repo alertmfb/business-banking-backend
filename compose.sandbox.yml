@@ -24,7 +24,7 @@ services:
       POSTGRES_PASSWORD: postgrespassword
       POSTGRES_DB: mydatabase
     ports:
-      - "0:5432"
+      - "32777:7007"
     volumes:
       - business-banking-db-data:/var/lib/postgresql/data
 
